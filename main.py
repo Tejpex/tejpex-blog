@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, abort, render_template, redirect, url_for, flash
+from flask import Flask, abort, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -9,12 +9,19 @@ from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
+import smtplib
 import os
 from dotenv import load_dotenv
 # Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 
+
 load_dotenv()
+
+smtp_address = os.getenv("SMTP_ADDRESS")
+smtp_key = os.getenv("SMTP_PASSWORD")
+my_email = os.getenv("MY_EMAIL")
+to_email = os.getenv("TO_EMAIL")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("FLASK_KEY")
@@ -252,9 +259,22 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    if request.method == 'POST':
+        name = request.form["name"]
+        email = request.form["email"]
+        phone = request.form["phone"]
+        message = request.form["message"]
+        mail_to_send = (f"Subject: New Blog Message! \n\n"
+                        f"Name: {name} \nEmail: {email} \nPhone: {phone} \nMessage: {message}")
+        with smtplib.SMTP(smtp_address, port=587) as connection:
+            connection.starttls()
+            connection.login(user=my_email, password=smtp_key)
+            connection.sendmail(from_addr=my_email, to_addrs=to_email, msg=mail_to_send)
+        return render_template("contact.html", message_sent=True)
+    else:
+        return render_template("contact.html", message_sent=False)
 
 
 if __name__ == "__main__":
