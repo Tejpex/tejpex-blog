@@ -10763,11 +10763,6 @@ header.masthead .post-heading .meta a {
   flex-direction: column;
 }
 
-.preview-text {
-  display: flex;
-  flex-direction: column;
-}
-
 .preview-text > a {
   color: #212529;
 }
