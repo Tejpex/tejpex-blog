@@ -38,6 +38,59 @@
       href="{{ url_for('static', filename='css/styles.css') }}"
       rel="stylesheet"
     />
+    <style>
+      .post-preview {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .preview-text > a {
+        color: #212529;
+      }
+      .preview-text > a:focus, .preview-text > a:hover {
+        text-decoration: none;
+        color: #0085A1;
+      }
+      .preview-text > a > .post-title {
+        font-size: 1.875rem;
+        margin-top: 1.875rem;
+        margin-bottom: 0.625rem;
+      }
+      .preview-text > a > .post-subtitle {
+        font-weight: 300;
+        margin-bottom: 0.625rem;
+      }
+      .preview-text > .post-meta {
+        font-size: 1.125rem;
+        font-style: italic;
+        margin-top: 0;
+        color: #6c757d;
+      }
+      .preview-text > .post-meta > a {
+        text-decoration: none;
+      }
+      @media (min-width: 992px) {
+        .preview-text > a > .post-title {
+          font-size: 2.25rem;
+        }
+      }
+
+      .preview-image {
+        height: 10rem;
+        width: 200px;
+        object-fit: cover;
+        margin-top: 1.875rem;
+      }
+
+      @media (min-width: 600px) {
+        .preview-image {
+          margin: 1.875rem 1.875rem 0;
+        }
+        .post-preview {
+          flex-direction: row;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation-->
