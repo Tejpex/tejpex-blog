@@ -9,8 +9,8 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="site-heading">
-          <h1>My Blog</h1>
-          <span class="subheading">A collection of random musings.</span>
+          <h1>Min blogg</h1>
+          <span class="subheading">Lösa tankar om saker jag ser, hör och gör.</span>
         </div>
       </div>
     </div>
@@ -28,9 +28,9 @@
           <h3 class="post-subtitle">{{ post.subtitle }}</h3>
         </a>
         <p class="post-meta">
-          Posted by
+          Skrivet av
           <a href="#">{{post.author.name}}</a>
-          on {{post.date}}
+          den {{post.date}}
           {% if current_user.id == 1: %}
           <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
           {% endif %}
@@ -46,14 +46,14 @@
         <a
           class="btn btn-primary float-right"
           href="{{url_for('add_new_post')}}"
-          >Create New Post</a
+          >Skriv nytt</a
         >
       </div>
       {% endif %}
 
       <!-- Pager-->
       <div class="d-flex justify-content-end mb-4">
-        <a class="btn btn-secondary text-uppercase" href="{{url_for('get_more_posts', page_nr=next_page)}}">Older Posts →</a>
+        <a class="btn btn-secondary text-uppercase" href="{{url_for('get_more_posts', page_nr=next_page)}}">Fler inlägg →</a>
       </div>
     </div>
   </div>
