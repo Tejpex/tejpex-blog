@@ -23,7 +23,7 @@
       <!-- Post preview-->
       {% for post in post_list %}
       <div class="container post-preview">
-        <img class="preview-image" src="{{post.img_url}}" />
+        <img class="preview-image" src="{{post.img_url}}"/>
         <div class="preview-text">
           <a href="{{ url_for('show_post', post_id=post.id) }}">
             <h2 class="post-title">{{ post.title }}</h2>

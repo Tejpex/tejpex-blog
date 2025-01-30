@@ -10,8 +10,7 @@
     <meta name="author" content="" />
     <title>Daily Standup by Tejpex</title>
     <!-- Load Bootstrap-Flask CSS here -->
-    {{ bootstrap.load_css() }}
-    {% block styles %}
+
     <link
       rel="icon"
       type="image/x-icon"
@@ -38,7 +37,6 @@
       href="{{ url_for('static', filename='css/styles.css') }}"
       rel="stylesheet"
     />
-    {% endblock %}
   </head>
   <body>
     <!-- Navigation-->
