@@ -13,22 +13,7 @@ class CreatePostForm(FlaskForm):
     submit = SubmitField("Submit Post")
 
 
-class RegisterForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired()])
-    email = StringField("E-mail:", validators=[DataRequired()])
-    password = PasswordField("Password: ", validators=[
-        DataRequired(),
-        Length(min=8, message="Password has to be at least 8 characters.")
-    ])
-    submit = SubmitField("Sign Me Up!")
-
-
 class LoginForm(FlaskForm):
     email = StringField("E-mail:", validators=[DataRequired()])
     password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("Log In")
-
-
-class CommentForm(FlaskForm):
-    comment = CKEditorField("Comment", validators=[DataRequired()])
-    submit = SubmitField("Submit Comment")

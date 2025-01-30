@@ -13,7 +13,7 @@ import smtplib
 import os
 from dotenv import load_dotenv
 # Import your forms from the forms.py
-from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
+from forms import CreatePostForm, LoginForm
 
 
 load_dotenv()
@@ -129,21 +129,7 @@ def get_all_posts():
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
-    form = CommentForm()
-    if form.validate_on_submit():
-        if current_user.is_authenticated:
-            new_comment = Comment(
-                text=form.comment.data,
-                comment_author=current_user,
-                parent_post=requested_post
-            )
-            db.session.add(new_comment)
-            db.session.commit()
-            return redirect(url_for('show_post', post_id=post_id))
-        else:
-            flash("You need to log in or register to make a comment.")
-            return redirect(url_for('login'))
-    return render_template("post.html", post=requested_post, form=form)
+    return render_template("post.html", post=requested_post)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -194,38 +180,6 @@ def delete_post(post_id):
     db.session.delete(post_to_delete)
     db.session.commit()
     return redirect(url_for('get_all_posts'))
-
-
-@app.route("/delete/comment/<int:post_id>/<int:comment_id>")
-@only_commenter
-def delete_comment(post_id, comment_id):
-    comment_to_delete = db.get_or_404(Comment, comment_id)
-    db.session.delete(comment_to_delete)
-    db.session.commit()
-    return redirect(url_for('show_post', post_id=post_id))
-
-
-@app.route('/register', methods=["GET", "POST"])
-def register():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        email = form.email.data
-        user = db.session.execute(db.select(User).where(User.email == email)).scalar()
-        if user:
-            flash("E-mail already exist. Please, log in instead!")
-            return redirect(url_for('login'))
-        else:
-            salted_password = generate_password_hash(form.password.data, method='pbkdf2', salt_length=8)
-            new_user = User(
-                email=email,
-                password=salted_password,
-                name=form.name.data
-            )
-            db.session.add(new_user)
-            db.session.commit()
-            login_user(new_user)
-            return redirect(url_for('get_all_posts'))
-    return render_template("register.html", form=form)
 
 
 @app.route('/login', methods=["GET", "POST"])
