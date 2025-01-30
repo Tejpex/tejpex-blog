@@ -6,8 +6,6 @@
 */
 /*!
  * Bootstrap  v5.2.3 (https://getbootstrap.com/)
- * Copyright 2011-2022 The Bootstrap Authors
- * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
@@ -444,14 +442,6 @@ legend + * {
   -webkit-appearance: textfield;
 }
 
-/* rtl:raw:
-[type="tel"],
-[type="url"],
-[type="email"],
-[type="number"] {
-  direction: ltr;
-}
-*/
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -10767,81 +10757,66 @@ header.masthead .post-heading .meta a {
   text-align: center;
 }
 
-.post-preview > a {
+/* Post-preview styling */
+.post-preview {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-text > a {
   color: #212529;
 }
-.post-preview > a:focus, .post-preview > a:hover {
+.preview-text > a:focus, .preview-text > a:hover {
   text-decoration: none;
   color: #0085A1;
 }
-.post-preview > a > .post-title {
+.preview-text > a > .post-title {
   font-size: 1.875rem;
   margin-top: 1.875rem;
   margin-bottom: 0.625rem;
 }
-.post-preview > a > .post-subtitle {
+.preview-text > a > .post-subtitle {
   font-weight: 300;
   margin-bottom: 0.625rem;
 }
-.post-preview > .post-meta {
+.preview-text > .post-meta {
   font-size: 1.125rem;
   font-style: italic;
   margin-top: 0;
   color: #6c757d;
 }
-.post-preview > .post-meta > a {
+.preview-text > .post-meta > a {
   text-decoration: none;
 }
 @media (min-width: 992px) {
-  .post-preview > a > .post-title {
+  .preview-text > a > .post-title {
     font-size: 2.25rem;
   }
 }
 
-
-/* Commment Styling */
-.commentBox {
-  padding:10px;
-  border-top:1px dotted #bbb;
-}
-.commentBox .form-group:first-child, .actionBox .form-group:first-child {
-  width:80%;
-}
-.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-  width:18%;
+.preview-image {
+  height: 10rem;
+  width: 200px;
+  object-fit: cover;
+  margin-top: 1.875rem;
 }
 
-
-.comment {
-  padding-top: 20px;
-}
-.commentList {
-  padding:0;
-  list-style:none;
-  max-height:200px;
-  overflow:auto;
-}
-.commentList li {
-  margin:0;
-  margin-top:10px;
-}
-.commentList li > div {
-  display:table-cell;
-}
-.commenterImage {
-  width:30px;
-  margin-right:5px;
-  height:100%;
-  float:left;
-}
-.commenterImage img {
-  width:100%;
-  border-radius:50%;
-}
-.commentText p {
-  margin:0;
+@media (min-width: 600px) {
+  .preview-image {
+    width: 200px;
+    margin: 1.875rem 1.875rem 0;
+  }
+  .post-preview {
+    flex-direction: row;
+  }
 }
 
+/* Comment Styling? */
 .sub-text {
   color:#aaa;
   font-family:verdana;
@@ -10853,3 +10828,4 @@ header.masthead .post-heading .meta a {
   color: #ee6f57;
   text-align: center;
 }
+
