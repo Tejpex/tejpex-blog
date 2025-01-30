@@ -119,14 +119,21 @@ with app.app_context():
 
 
 # ROUTES
-@app.route('/')
-def get_all_posts():
-    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.id.desc()))
+@app.route("/")
+def get_first_posts():
+    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.id.desc()).limit(10))
     posts = result.scalars().all()
-    return render_template("index.html", all_posts=posts)
+    return render_template("index.html", post_list=posts, next_page=1)
 
 
-@app.route("/post/<int:post_id>", methods=["GET", "POST"])
+@app.route("/page/<int:page_nr>")
+def get_more_posts(page_nr):
+    result = db.session.execute(db.select(BlogPost).order_by(BlogPost.id.desc()).offset(page_nr*10))
+    posts = result.scalars().all()
+    return render_template("index.html", post_list=posts, next_page=page_nr+1)
+
+
+@app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
     return render_template("post.html", post=requested_post)
@@ -232,4 +239,5 @@ def contact():
 
 
 if __name__ == "__main__":
+    # True if developing, false if production
     app.run(debug=False)
